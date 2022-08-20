@@ -1,0 +1,173 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<link href="{% static '/CSS/dashboard.css'%}" rel="stylesheet" />
+
+<script src="https://unpkg.com/phosphor-icons"></script>
+
+<div class="container">
+  <div class="wrapper">
+    <ul class="indicator">
+      <li class="active" data-target="#listings">
+        <i class="ph-clipboard-text"></i>Listings
+      </li>
+      <li data-target="#addRoom" style="padding-right: 28px">
+        <i class="ph-house"></i> Add Room
+      </li>
+      <li data-target="#messages">
+        <i class="ph-envelope-simple"></i>Messages
+      </li>
+      <li data-target="#settings"><i class="ph-gear-six"></i> Settings</li>
+    </ul>
+    <ul class="content">
+      <li class="active" id="listings">
+        <h1>Listings</h1>
+        <div class="container-card">
+          <div class="row">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              {% for col,i in data %}
+              <div class="col">
+                <div class="card" style="margin-bottom: 2rem">
+                  <!-- <img src="https://via.placeholder.com/150x100" class="card-img-top" alt="..."> -->
+
+                  <img
+                    src="{{i.images.url}}"
+                    alt="not found"
+                    width="150"
+                    height="100"
+                  />
+                  <!-- <h4>{{col}}</h4> -->
+                  <div class="card-body">
+                    <h5 class="price">{{col.price}}</h5>
+                    <p class="category">{{col.category}}</p>
+                    <p class="address">{{col.address}}|{{col.city}}</p>
+                  </div>
+                  <a href="roomDetails/dashboard/{{col.id}}"
+                    ><button>view full details</button></a
+                  >
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li id="addRoom">
+        <h1>Add Room</h1>
+        <div class="container">
+          <div class="form-body">
+            <div class="row">
+              <div class="form-holder">
+                <div class="form-content">
+                  <div class="form-items">
+                    <h3>Register Today</h3>
+                    <p>Fill in the data below.</p>
+                    <form
+                      class="requires-validation"
+                      autocomplete="off"
+                      method="get"
+                    >
+                      {% csrf_token %}
+                      <div class="col-md-12">{{roomForm.address}}</div>
+
+                      <div class="col-md-12">{{roomForm.city}}</div>
+
+                      <div class="col-md-12">{{roomForm.category}}</div>
+
+                      <div class="col-md-12">{{roomForm.price}}</div>
+
+                      <div class="col-md-12">{{roomForm.availablity}}</div>
+
+                      <div class="col-md-12">{{roomForm.available_on}}</div>
+
+                      <div class="col-md-12">{{roomForm.description}}</div>
+
+                      <div class="col-md-12">{{roomForm.amenities}}</div>
+
+                      <div class="col-md-12">{{imageForm.image}}</div>
+
+                      <div class="form-button mt-3">
+                        <button
+                          id="submit"
+                          type="submit"
+                          class="btn btn-primary"
+                        >
+                          Register
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li id="messages">
+        <h1>Messages</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
+          molestias quasi est expedita, a pariatur deleniti cum reiciendis
+          similique cupiditate?
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
+          explicabo magni facere quo voluptas error, nulla nihil maxime fugiat
+          earum iure fugit quas eligendi harum accusantium esse libero totam
+          eveniet reprehenderit dignissimos ex, eius, voluptate! A maxime ad
+          nostrum voluptatem, placeat, assumenda fugiat? Accusamus fuga
+          repellendus nisi qui.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur
+          optio in pariatur ab officiis aperiam harum veritatis adipisci eveniet
+          fuga soluta voluptas minima a necessitatibus, blanditiis.
+        </p>
+      </li>
+      <li id="settings">
+        <h1>Settings</h1>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing, elit. Velit
+          quaerat magnam sit, nobis sed cum eius voluptatem quis facilis sunt,
+          quia? Non atque, facere obcaecati veniam! Impedit atque, facilis
+          similique doloribus quidem quibusdam quod! Quam odit quasi quia
+          accusantium natus eos accusamus sequi repellat modi reiciendis vitae
+          provident tenetur sint tempora quaerat expedita facere, assumenda quos
+          consequatur minima quod deleniti.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis,
+          sapiente.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
+          molestias quasi est expedita, a pariatur deleniti cum reiciendis
+          similique cupiditate?
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const allIndicator = document.querySelectorAll(".indicator li");
+  const allContent = document.querySelectorAll(".content li");
+
+  allIndicator.forEach((item) => {
+    item.addEventListener("click", function () {
+      const content = document.querySelector(this.dataset.target);
+
+      allIndicator.forEach((i) => {
+        i.classList.remove("active");
+      });
+
+      allContent.forEach((i) => {
+        i.classList.remove("active");
+      });
+
+      content.classList.add("active");
+      this.classList.add("active");
+    });
+  });
+</script>
+<!-- <script src={% static " js/dashboard.js " %}></script> -->
+{% endblock%}

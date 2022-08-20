@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<style>
+    .container-card {
+        width: 100%;
+        padding-left: 1rem;
+        background-color: var(--grey);
+    }
+</style>
+<form action="" method="get">
+    {{filter.form}}
+    <input type="submit">
+</form>
+
+
+
+<div class="container-card">
+    <div class="row">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for col,i in data %}
+            <div class="col">
+                <div class="card" style="margin-bottom: 2rem">
+                    <!-- <img src="https://via.placeholder.com/150x100" class="card-img-top" alt="..."> -->
+
+                    <img src="{{i.images.url}}" alt="not found" width="150" height="100" />
+                    <!-- <h4>{{col}}</h4> -->
+                    <div class="card-body">
+                        <h5 class="price">{{col.price}}</h5>
+                        <p class="category">{{col.category}}</p>
+                        <p class="address">{{col.address}}|{{col.city}}</p>
+                    </div>
+                    <a href="roomDetails/room/{{col.id}}"><button>view full details</button></a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock%}
